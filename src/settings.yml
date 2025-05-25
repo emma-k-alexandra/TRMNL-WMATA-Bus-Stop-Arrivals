@@ -1,0 +1,23 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID={{ stopid }}
+polling_headers: api_key={{ api_key }}
+id: 36747
+custom_fields:
+- keyname: api_key
+  field_type: password
+  name: API Key
+  description: Your API Key for the WMATA Developer API
+  placeholder: xxxxxxxxxx
+  help_text: Get one from https://developer.wmata.com/profile
+- keyname: stopid
+  field_type: string
+  name: Stop ID
+  description: The ID of the bus stop to check arrivalsfor
+  help_text: You can find the Stop ID from the bus stop's entry on Google Maps or Bus ETA https://buseta.wmata.com/index
+name: WMATA Bus Stop Arrivals
+refresh_interval: 15

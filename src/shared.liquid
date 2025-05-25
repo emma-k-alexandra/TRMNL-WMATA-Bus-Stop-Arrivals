@@ -1,0 +1,32 @@
+{% template arrival_time %}
+  {% assign prediction_minutes_in_seconds = prediction.Minutes | times: 60 %}
+  <span>{{ trmnl.system.timestamp_utc | plus: trmnl.user.utc_offset | plus: prediction_minutes_in_seconds | date: "%l:%M %P" }}</span>
+{% endtemplate %}
+
+{% template eta_table %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <span class="title">Route</span>
+          </th>
+          <th>
+            <span class="title">ETA</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prediction in Predictions %}
+          {% assign prediction_minutes_in_seconds = prediction.Minutes | times: 60 %}
+          <tr>
+            <td>
+              <span class="label">{{ prediction.RouteID }}</span>
+            </td>
+            <td>
+              <span class="label">{{ trmnl.system.timestamp_utc | plus: trmnl.user.utc_offset | plus: prediction_minutes_in_seconds | date: "%l:%M %P" }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endtemplate %}

@@ -1,0 +1,59 @@
+<style>
+  .my-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: calc(var(--screen-h) - var(--gap)*2 - var(--title_bar-h));
+    width: 100%;
+    place-items: center;
+    place-content: center;
+    text-align: center;
+  }
+
+  .center {
+    display: inline;
+    place-content: center;
+    line-height: 1.5 !important;
+  }
+
+  .invert-text {
+    background-color: black;
+    color: white;
+    padding-inline: 0.5rem;
+    border-radius: 0.25rem;
+  }
+</style>
+
+<div class="layout">
+  {% if Predictions.size == 1 %}
+  {% assign only_prediction = Predictions[0] %}
+  <div class="my-grid">
+    <div 
+      class="value value--small center" 
+      data-value-fit="true"
+      style="grid-column: 1 / span 3"
+      ><span class="invert-text">{{ only_prediction.RouteID }}</span> bus headed<br><span class="invert-text">{{ only_prediction.DirectionText }}</span></div>
+    <div
+      class="value value--medium center"
+      data-value-fit="true"
+      style="grid-column: 1 / span 3;"
+      >arrives at <span 
+                    class="invert-text">{{ StopName }}</span></div>
+    <span
+      class="value value--medium center"
+      data-value-fit="true"
+      style="grid-column: 1 / span 3"
+      >at <span
+            class="invert-text value value--large"
+            >{% render 'arrival_time', prediction: only_prediction, trmnl: trmnl %}</span></span>
+  </div>
+  {% else %}
+  <div style="width: 100%">
+    {% render 'eta_table', Predictions: Predictions, trmnl: trmnl %}
+  </div>
+  {% endif %}
+</div>
+<div class="title_bar">
+  <img class="image" src="/images/plugins/trmnl--render.svg" />
+  <span class="title">MetroBus arrivals at {{ StopName }} </span>
+</div>
